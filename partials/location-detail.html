@@ -1,0 +1,7 @@
+<h1>{{loc.rentallocation.name}}</h1>
+
+ <ul class="location">
+    <li ng-repeat="car in cars.rentalcars" class="thumbnail">
+    	<a href="#/admin/{{loc.rentallocation.id}}/{{car.id}}">{{car.make}}</a> | {{car.model}}
+    </li>
+</ul>

@@ -1,0 +1,25 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2">
+      <!--Sidebar content-->
+
+      Search: <input ng-model="query">
+      Sort by:
+      <select ng-model="orderProp">
+        <option value="name">Alphabetical</option>
+        <option value="zip">Zip</option>
+      </select>
+
+    </div>
+    <div class="span10">
+      <!--Body content-->
+
+      <ul class="location">
+        <li ng-repeat="location in loc.rentallocation | filter:query | orderBy:orderProp" class="thumbnail">
+          <a href="#/admin/{{location.id}}">{{location.name}}</a> | {{location.zip}}
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>

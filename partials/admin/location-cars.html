@@ -1,0 +1,9 @@
+<h1>{{loc.rentallocation.name}}</h1>
+
+<p><a href="#/admin/{{loc.rentallocation.id}}/new">Leihauto hinzufügen</a></p>
+
+ <ul class="location">
+    <li ng-repeat="car in cars.rentalcar" class="thumbnail">
+    	<a href="#/admin/{{loc.rentallocation.id}}/{{car.id}}">{{car.make}}</a> | {{car.model}}
+    </li>
+</ul>
