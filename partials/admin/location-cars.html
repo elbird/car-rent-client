@@ -1,9 +1,10 @@
-<h1>{{loc.rentallocation.name}}</h1>
+<h1>{{location.name}}</h1>
 
-<p><a href="#/admin/{{loc.rentallocation.id}}/new">Leihauto hinzufügen</a></p>
+<p><a href="#/admin/{{location.id}}/car/new">Leihauto hinzufügen</a></p>
 
  <ul class="location">
-    <li ng-repeat="car in cars.rentalcar" class="thumbnail">
-    	<a href="#/admin/{{loc.rentallocation.id}}/{{car.id}}">{{car.make}}</a> | {{car.model}}
+    <li ng-repeat="car in cars" class="thumbnail">
+    	<a href="#/admin/{{location.id}}/car/{{car.id.split('/')[2]}}">{{car.make}}</a> | {{car.model}} | 
+    	<button class="btn btn-danger" ng-click="deleteCar(car.id, location.id)">Löschen</button>
     </li>
 </ul>
