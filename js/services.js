@@ -3,7 +3,7 @@
 /* Services */
 
 angular.module('adminServices', ['ngResource'])
-.factory('Admin', function($resource){
+.factory('LocationCar', function($resource){
 	var RentalLocation = $resource('/api/rentallocation/:locationId', {
 			locationId: '@locationId'
 		}, {
@@ -22,4 +22,22 @@ angular.module('adminServices', ['ngResource'])
 			}
 		});
   	return { Location: RentalLocation, Car: RentalCar };
+});
+
+
+angular.module('userServices', ['ngResource'])
+.factory('UserBooking', function($resource){
+	var User = $resource('/api/user/:userId', {
+			userId: '@userId'
+		}),
+		Booking = $resource('/api/user/:user_id/booking/:id', {
+			id: '@angularShortId',
+			rentallocation_id: '@user_id'
+		}, {
+			'query':  {
+				method:'GET',
+				isArray: true
+			}
+		});
+  	return { User: User, Car: Booking };
 });
