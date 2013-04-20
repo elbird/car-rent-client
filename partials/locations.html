@@ -3,7 +3,9 @@
 <div class="media"  ng-repeat="location in locations | filter:query | orderBy:orderProp">
 
   <div class="media-body">
-    <h4 class="media-heading"> <a href="#/admin/{{location.id}}">{{location.name}}</a></h4>
+    <h4 class="media-heading"> 
+      <a href="#/{{module}}/{{location.id}}">{{location.name}}</a>
+    </h4>
     <address>
       {{location.adress}}<br>
       {{location.zip}} {{location.city}}<br>
@@ -11,7 +13,6 @@
       <a href="mailto:{{location.mail}}">{{location.mail}}</a><br>
       Öffunungszeiten: {{location.hours}}
     </address>
-    
   </div>
 </div>
 </div>

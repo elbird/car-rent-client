@@ -13,6 +13,7 @@
   <script src="js/filters.js"></script>
   <script src="js/services.js"></script>
   <script src="js/lib/angular-resource.js"></script>
+  <script src="js/lib/angular-cookies.js"></script>
   <script src="js/lib/bootstrap/ui-bootstrap-0.2.0.js"></script>
   <script src="js/lib/bootstrap/ui-bootstrap-tpls-0.2.0.js"></script>
   <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -28,18 +29,24 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Rent-A-Car</a>
+          <a class="brand" href="#" >Rent-A-Car</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
                <li ng-repeat="item in navItems" ng-class="item.active">
                   <a  href="{{item.url}}">{{item.name}}</a>
                </li>
             </ul>
-            <form class="navbar-form pull-right">
-              <input class="span2" type="text" placeholder="Email">
-              <input class="span2" type="password" placeholder="Password">
-              <button type="submit" class="btn">Sign in</button>
-            </form>
+            <div ng-switch on="loginInfo.loggedIn" >
+              <div class="pull-right" ng-switch-when="true">
+                <p class="navbar-text pull-left" style="padding-right: 10px">Du bist eingelogged als {{loginInfo.user.firstname}}</p>
+                <button type="button" class="btn btn-small pull-right" ng-click="logout()">Abmelden</button>
+              </div>
+              <form class="navbar-form pull-right" ng-submit="login()" ng-switch-default>
+                <input class="span2" type="text" placeholder="Email" ng-model="loginEmail">
+                <input class="span2" type="password" placeholder="Password" ng-model="loginPassword">
+                <button type="submit" class="btn">Anmelden</button>
+              </form>
+            </div>
           </div><!--/.nav-collapse -->
         </div>
       </div>

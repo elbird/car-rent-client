@@ -1,63 +1,81 @@
 <!--
-  this.string('make', { required: true });
-  this.string('model', { required: true });
-  this.number('year');
-  this.number('ps');
-  this.number('price', { required: true });
-  this.string('currency', { required: true });
+  this.string('dateFrom', { format: 'date', required: true });
+  this.string('dateTo', { format: 'date', required: true });
+  this.number('days', { required: true });
+  this.string('currency');
+  this.string('rentalcar_id');
 -->
 
-<form name="editCar" ng-submit="submit()" class="form-horizontal">
+<form name="bookCar" ng-submit="submit()" class="form-horizontal">
   <fieldset>
+    
     <div class="span11 offset1">
-      <legend>Auto anlegen/bearbeiten</legend>
+      <legend>Mietwagen buchen</legend>
     </div>
-    <div class="span5 offset1">
-      <div class="control-group">
-        <label class="control-label" for="car-make">Marke</label>
-        <div class="controls">
-          <input type="text" id="car-make" name="make" ng-model="car.make" placeholder="Marke" required /> 
-        </div>
-      </div>
+    <div class="span3 offset1">
+      <h4>Station: {{location.name}}</h4>
+      <address>
+        {{location.adress}}<br>
+        {{location.zip}} {{location.city}}<br>
+        <abbr title="Phone">P:</abbr> {{location.phone}}<br>
+        <a href="mailto:{{location.mail}}">{{location.mail}}</a><br>
+        Öffunungszeiten: {{location.hours}}
+      </address>
+    </div>
+    <div class="span2">
+      <h4>
+            <span>{{car.make}} - {{car.model}}</span>
+          </h4>
+      <div class="media">
+        <div class="media-body">
+          <p>
+            <b>Preis:  {{car.currency}} {{car.price}} / Tag </b><br>
+            Baujahr: {{car.year}}, {{car.ps}} PS
 
-      <div class="control-group">
-        <label class="control-label" for="car-model">Modell</label>
-        <div class="controls">
-          <input type="text" id="car-model" name="model" ng-model="car.model" placeholder="Modell" required /> 
+          </p>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="car-year">Baujahr</label>
-        <div class="controls">
-          <input type="text" id="car-year" name="year" ng-model="car.year" placeholder="Baujahr" /> 
+      <div class="media">
+        <h4>Gesamtpreis:</h4>
+        <div class="media-body">
+          <p><b>{{booking.currency}} {{ price.result | number:2 }} </b>
+          </p>
         </div>
       </div>
     </div>
     <div class="span5">
+      <p class="text-error" ng-show="formError">Fehler beim Speichern</p>
       <div class="control-group">
-        <label class="control-label" for="car-price">Preis/Tag</label>
+        <label class="control-label" for="booking-from">Von</label>
         <div class="controls">
-          <input type="text" id="car-price" name="price" ng-model="car.price" placeholder="Preis" required /> 
+          <input type="text" id="booking-from" name="from" ng-model="booking.dateFrom" placeholder="YYYY-MM-DD" required /> 
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="booking-to">Bis</label>
+        <div class="controls">
+          <input type="text" id="booking-to" name="to" ng-model="booking.dateTo" placeholder="YYYY-MM-DD" required /> 
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="car-currency">Währung</label>
+        <label class="control-label" for="booking-days">Tage</label>
         <div class="controls">
-          <input type="text" id="car-currency" name="currency" ng-model="car.currency" placeholder="Währung" required /> 
+          <input type="text" id="booking-days" name="days" ng-model="booking.days" ng-change="calculatePrice()" placeholder="Tage" /> 
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="car-ps">PS</label>
+        <label class="control-label" for="booking-currency">Währung</label>
         <div class="controls">
-          <input type="text" id="car-ps" name="ps" ng-model="car.ps" placeholder="PS"  /> 
+          <input type="text" id="booking-currency" name="currency" ng-change="calculatePrice()" ng-model="booking.currency" placeholder="Währung" required /> 
         </div>
       </div>
     </div>
-    <div class="span11 offset1">
+    <div class="span4 offset6">
       <div class="control-group">
         <div class="controls">
-          <button class="btn btn-primary" type="submit" id="submitEditCar">
-            Speichern
+          <button class="btn btn-primary" type="submit" id="submitBooking">
+            Buchen
           </button>
           <button class="btn" ng-click="cancel()" id="cancelEditCar">
             Abbrechen
