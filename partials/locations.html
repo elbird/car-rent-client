@@ -17,6 +17,9 @@
 </div>
 </div>
 <div class="span6">
+  <google-map center="center" draggable="true" zoom="zoom" markers="markers" style="display:block; height: 400px; width:500px;" fit="true">
+  </google-map>
+  
 <h3>Stationen Suche</h3>
 <div class="control-group">
   <label class="control-label" for="location-search">Suche</label>
@@ -25,6 +28,7 @@
   </div>
 </div>
 <div class="control-group">
+
   <label class="control-label" for="location-sort">Sortieren</label>
   <div class="controls">
     <select id="location-sort" name="location-sort" ng-model="orderProp">

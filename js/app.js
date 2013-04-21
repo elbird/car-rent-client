@@ -2,7 +2,7 @@
 
 /* App Module */
 
-angular.module('carRental', ['adminServices', 'userServices', 'ui.bootstrap', 'ngCookies']).
+angular.module('carRental', ['adminServices', 'userServices', 'ui.bootstrap', 'ngCookies', "google-maps"]).
 config(['$routeProvider', function($routeProvider) {
 	$routeProvider
 	.when('/home', {templateUrl: 'partials/home.html', controller: HomeCtrl})

@@ -1,5 +1,16 @@
 'use strict';
 
+function getMarkerForAddress(geocoder, address, cb) {
+    geocoder.geocode( { 'address': address}, function(results, status) {
+    	if (status === google.maps.GeocoderStatus.OK) {
+	       cb({latitude: results[0].geometry.location.jb, longitude: results[0].geometry.location.kb});
+      	} else {
+	      	console.log(status);
+		}
+    });
+}
+
+
 
 /* Controllers */
 function MainCtrl($scope, $location, $cookieStore, User) {
@@ -111,11 +122,35 @@ function HomeCtrl($scope, $location, $q, $dialog, User, Booking, LocationCar, Ca
  * RENT Section
  */
 
-function RentLocationsCtrl($scope, $location, LocationCar, User) {
+function RentLocationsCtrl($scope, $location, LocationCar, User, $q) {
+	var geocoder = new google.maps.Geocoder();
 	$scope.module = "rent";
 	$scope.loginInfo = User.getLoginInfo(true);
 	$scope.locations = LocationCar.Location.query();
   	$scope.orderProp = 'zip';
+
+  	angular.extend($scope, {
+		center: {
+			lat: 47.20, // initial map center latitude
+			lng: 13.20 // initial map center longitude
+		},
+		markers: [], // an array of markers,
+		zoom: 7 // the zoom level
+	});
+	function addMarker(marker) {
+		$scope.markers.push(marker);
+		$scope.$apply();
+	}
+	$scope.locations.$then(function () {
+		var i;
+		for (i = 0; i < $scope.locations.length; i++) {
+			getMarkerForAddress(
+				geocoder,
+				$scope.locations[i].adress + ", " + $scope.locations[i].zip + " " + $scope.locations[i].city,
+				addMarker
+			);
+		}
+	});
 }
 
 function RentLocationsCarsCtrl($scope, $location, $routeParams, User, LocationCar) {
@@ -176,11 +211,33 @@ function RentBookingCtrl($scope, $routeParams, $location, Booking, User, Locatio
  */
 
 function LocationListCtrl($scope, LocationCar) {
+	var geocoder = new google.maps.Geocoder();
 	$scope.module = "admin";
   	$scope.locations = LocationCar.Location.query();
   	$scope.orderProp = 'zip';
+  	angular.extend($scope, {
+		center: {
+			lat: 47.20, // initial map center latitude
+			lng: 13.20 // initial map center longitude
+		},
+		markers: [], // an array of markers,
+		zoom: 7 // the zoom level
+	});
+	function addMarker(marker) {
+		$scope.markers.push(marker);
+		$scope.$apply();
+	}
+	$scope.locations.$then(function () {
+		var i;
+		for (i = 0; i < $scope.locations.length; i++) {
+			getMarkerForAddress(
+				geocoder,
+				$scope.locations[i].adress + ", " + $scope.locations[i].zip + " " + $scope.locations[i].city,
+				addMarker
+			);
+		}
+	});
 }
-
 
 function AdminLocationDetailCtrl($scope, $routeParams, $dialog, $location, LocationCar) {
   $scope.module = "admin";
